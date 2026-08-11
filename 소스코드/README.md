@@ -55,6 +55,7 @@ python hwp_capture.py
 # 1) 독립 실행 EXE 빌드 (OCR 기능 포함 시 --collect-all winsdk 필요)
 python -m pip install pyinstaller pystray winsdk
 pyinstaller BaroCapture.spec
+powershell -ExecutionPolicy Bypass -File build_portable.ps1
 
 # 2) 설치 파일(setup) 생성 — Inno Setup 6 필요
 ISCC.exe installer.iss
