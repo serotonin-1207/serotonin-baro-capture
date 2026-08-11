@@ -1,0 +1,15 @@
+__pycache__/
+.claude/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+소스코드/build/
+소스코드/dist/
+소스코드/Output/
+release/
+release-staging*/
+**/.release-test/
+설치파일/*.exe
+*.tmp
+settings.json
