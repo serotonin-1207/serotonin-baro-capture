@@ -17,6 +17,12 @@
 
 자세한 설명과 빌드 명령은 [`소스코드/README.md`](소스코드/README.md)를 참고하세요.
 
+## 화면
+
+![Serotonin 바로캡처 홈](release-assets/screenshots/01-home.jpg)
+
+![Serotonin 바로캡처 편집기](release-assets/screenshots/02-editor.jpg)
+
 ## 정보
 
 - 제품: Serotonin 바로캡처
