@@ -1,31 +1,12 @@
 # Serotonin 바로캡처
 
-광고·계정·서버 없이 Windows PC 안에서 동작하는 빠른 화면 캡처 도구입니다.
+영역 캡처와 최근 캡처만 제공하는 Windows 도구입니다.
 
-영역·창·스텝 캡처, 클립보드 복사, 이미지 편집, 화면 고정, OCR 텍스트 추출과 개인정보 모자이크를 지원합니다. 기본 단축키는 `Ctrl+Shift+Z`입니다.
+- Ctrl+Shift+Z로 화면 영역을 선택하면 클립보드에 바로 복사합니다.
+- 트레이 아이콘에서 최근 캡처를 열어 이미지를 다시 복사하거나 지울 수 있습니다.
+- 패널 상단의 설정에서 영역 캡처 단축키를 바꿀 수 있습니다.
 
-## 주요 기능
+v3.0.6 실행 파일은 로컬 빌드 폴더 `release/v3.0.6`에 있습니다.
+[사용법과 빌드 방법](소스코드/README.md)
 
-- 영역, 창, 스텝 캡처
-- 캡처 직후 미리보기와 편집
-- 텍스트·번호·도형·펜·형광펜·모자이크·자르기
-- 화면 고정과 Windows 내장 OCR
-- PNG, JPG, BMP, GIF, WEBP 저장 및 목표 용량 맞추기
-- 최신 안정 릴리스 확인(자동 설치 없음)
-
-## 실행 및 빌드
-
-자세한 설명과 빌드 명령은 [`소스코드/README.md`](소스코드/README.md)를 참고하세요.
-
-## 화면
-
-![Serotonin 바로캡처 홈](release-assets/screenshots/01-home.jpg)
-
-![Serotonin 바로캡처 편집기](release-assets/screenshots/02-editor.jpg)
-
-## 정보
-
-- 제품: Serotonin 바로캡처
-- 버전: v1.0.0
-- 제작: 이은호
-- 문의: serotonin.1207@gmail.com
+제작 이은호 · serotonin.1207@gmail.com
