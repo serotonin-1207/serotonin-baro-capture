@@ -1,4 +1,4 @@
-Serotonin 바로캡처 3.0.6
+Serotonin 바로캡처 3.0.7
 제작 이은호 · serotonin.1207@gmail.com
 
 함께 배포되는 구성 요소의 저작권과 라이선스는 이 폴더에서 확인할 수 있습니다.

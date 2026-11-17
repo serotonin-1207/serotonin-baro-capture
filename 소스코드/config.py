@@ -6,7 +6,7 @@ import tempfile
 from pathlib import Path
 
 APP_NAME = "Serotonin 바로캡처"
-APP_VERSION = "3.0.6"
+APP_VERSION = "3.0.7"
 RELEASES_URL = "https://github.com/serotonin-1207/serotonin-baro-capture/releases"
 AUTHOR_EMAIL = "serotonin.1207@gmail.com"
 DEFAULT_CAPTURE_SHORTCUT = "Ctrl+Shift+Z"

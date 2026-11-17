@@ -14,6 +14,8 @@ def main() -> None:
     # 핸들은 프로세스가 끝날 때까지 살려둬야 하므로 지역 변수로 mainloop 동안 유지한다.
     instance_handle = acquire_single_instance()
     if instance_handle is None:
+        if "--minimized" in sys.argv:
+            return
         root = tk.Tk(); root.withdraw()
         messagebox.showinfo(APP_NAME, "이미 실행 중입니다.\n작업표시줄 트레이 아이콘에서 최근 캡처를 열 수 있습니다.")
         root.destroy()

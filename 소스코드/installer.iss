@@ -1,9 +1,9 @@
 ; Serotonin 바로캡처 - Windows 설치 파일 빌드 스크립트 (Inno Setup 6)
 ; 빌드: "%LOCALAPPDATA%\Programs\Inno Setup 6\ISCC.exe" installer.iss
-; 결과: Output\Serotonin_BaroCapture_Setup_v3.0.6.exe
+; 결과: Output\Serotonin_BaroCapture_Setup_v3.0.7.exe
 
 #define AppName "Serotonin 바로캡처"
-#define AppVersion "3.0.6"
+#define AppVersion "3.0.7"
 #define AppPublisher "이은호"
 #define AppPublisherURL "https://github.com/serotonin-1207/serotonin-baro-capture"
 #define AppSupportURL "mailto:serotonin.1207@gmail.com"
@@ -12,9 +12,11 @@
 #ifdef TestInstall
 #define SetupAppId "SerotoninBaroCaptureBuildTest"
 #define SetupUninstallId SetupAppId
+#define StartupName "SerotoninBaroCaptureBuildTest"
 #else
 #define SetupAppId "{{8E5C2A41-7B3D-4F9A-9C1E-A1B2C3D4E5F6}"
 #define SetupUninstallId "{8E5C2A41-7B3D-4F9A-9C1E-A1B2C3D4E5F6}"
+#define StartupName "NoAdsCapture"
 #endif
 
 [Setup]
@@ -24,7 +26,7 @@ AppVersion={#AppVersion}
 AppPublisher={#AppPublisher}
 AppPublisherURL={#AppPublisherURL}
 AppSupportURL={#AppSupportURL}
-VersionInfoVersion=3.0.6.0
+VersionInfoVersion=3.0.7.0
 VersionInfoCompany=Serotonin
 VersionInfoDescription=Serotonin 바로캡처 설치 프로그램
 VersionInfoCopyright=이은호 · serotonin.1207@gmail.com
@@ -39,7 +41,7 @@ UsePreviousPrivileges=yes
 UsePreviousAppDir=yes
 AppMutex=Global\NoAdsCapture_SingleInstance
 OutputDir=Output
-OutputBaseFilename=Serotonin_BaroCapture_Setup_v3.0.6
+OutputBaseFilename=Serotonin_BaroCapture_Setup_v3.0.7
 SetupIconFile=app.ico
 UninstallDisplayIcon={app}\{#AppExe}
 Compression=lzma2/max
@@ -66,6 +68,12 @@ Name: "{group}\{#AppName}"; Filename: "{app}\{#AppExe}"
 Name: "{group}\{#AppName} 제거"; Filename: "{uninstallexe}"
 Name: "{autodesktop}\{#AppName}"; Filename: "{app}\{#AppExe}"; Tasks: desktopicon
 
+[Registry]
+; 기존 설치 범위에 맞춰 Windows 로그인 시 트레이에서 시작한다.
+Root: HKA; Subkey: "Software\Microsoft\Windows\CurrentVersion\Run"; \
+    ValueType: string; ValueName: "{#StartupName}"; \
+    ValueData: """{app}\{#AppExe}"" --minimized"; Flags: uninsdeletevalue
+
 [Run]
 ; 설치를 마치면 바로 실행한다(별도 체크 없이 기본 실행).
 Filename: "{app}\{#AppExe}"; Description: "지금 {#AppName} 실행"; \
@@ -74,6 +82,7 @@ Filename: "{app}\{#AppExe}"; Description: "지금 {#AppName} 실행"; \
 [Code]
 const
   UninstallKey = 'Software\Microsoft\Windows\CurrentVersion\Uninstall\{#SetupUninstallId}_is1';
+  StartupKey = 'Software\Microsoft\Windows\CurrentVersion\Run';
 
 var
   PreviousDir: String;
@@ -138,3 +147,22 @@ begin
     Log(Result);
   end;
 end;
+
+#ifndef TestInstall
+procedure CurStepChanged(CurStep: TSetupStep);
+var
+  InstallDir, OldCommand, NewCommand, UserCommand, MachineCommand: String;
+begin
+  if (CurStep <> ssPostInstall) or not IsAdminInstallMode then
+    Exit;
+  InstallDir := ExpandConstant('{app}');
+  OldCommand := '"' + InstallDir + '\BaroCapture.exe" --minimized';
+  NewCommand := '"' + InstallDir + '\{#AppExe}" --minimized';
+  { 같은 설치를 가리키는 이전 사용자별 항목만 통합한다. }
+  if RegQueryStringValue(HKLM64, StartupKey, '{#StartupName}', MachineCommand) and
+     (CompareText(MachineCommand, NewCommand) = 0) and
+     RegQueryStringValue(HKCU64, StartupKey, '{#StartupName}', UserCommand) and
+     ((CompareText(UserCommand, OldCommand) = 0) or (CompareText(UserCommand, NewCommand) = 0)) then
+    RegDeleteValue(HKCU64, StartupKey, '{#StartupName}');
+end;
+#endif
